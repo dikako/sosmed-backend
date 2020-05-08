@@ -21,31 +21,34 @@ toSave.map(obj => {
   });
 });
 */
+
 var filter = {
   where: {
-    name: {like: 'Dika'},
+    username: { like: 'kokodika' },
   }, // Kind of liek MySql Where Clause
   order: 'id ASC',
   limit: 10,
   skip: 0,
   fields: {
     email: true,
-    name: true,
   },
-  /*include: {
-    relation: 'Posts',
-    scope: {
-      limit: 5,
-      order: 'date DESC',
-      include: {
-        relation: 'Image',
-        limit: 1,
-        where: {type: 'thumbnail'},
-      },
-    },
-  },*/
 };
 
-models.Profile.findById("5eb3dceaa5f39ba854d88686", filter, (err, found) => {
+/*include: {
+  relation: 'Posts',
+  scope: {
+    limit: 5,
+    order: 'date DESC',
+    include: {
+      relation: 'Image',
+      limit: 1,
+      where: {type: 'thumbnail'},
+    },
+  },
+},
+};
+*/
+
+models.Profile.destroyById("5eb587838faff848b6552eb4", (err, found) => {
   console.log('Found?', err, found);
 });
