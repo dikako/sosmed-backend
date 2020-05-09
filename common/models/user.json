@@ -21,6 +21,16 @@
       "type": "hasMany",
       "model": "CustomAccessToken",
       "foreignKey": "userId"
+    },
+    "Post": {
+      "type": "hasMany",
+      "model": "Post",
+      "foreignKey": ""
+    },
+    "PostImage": {
+      "type": "hasMany",
+      "model": "PostImage",
+      "foreignKey": ""
     }
   },
   "acls": [],

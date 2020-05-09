@@ -49,6 +49,7 @@ var filter = {
 };
 */
 
-models.Profile.destroyById("5eb587838faff848b6552eb4", (err, found) => {
+models.Profile.destroyById("5eb587838faff848b6552eb4", {include: 'Posts'} (err, found) => {
   console.log('Found?', err, found);
+  found.Posts.destroyAll({date: {lte: new Date('2020-09-05')}})
 });

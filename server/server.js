@@ -36,7 +36,7 @@ boot(app, __dirname, function (err) {
 console.log(Object.keys(app.models));
 
 app.models.user.afterRemote('create', (ctx, user, next) => {
-  console.log("New User is: ", user);
+  console.log("New User is", user);
   app.models.Profile.create({
     first_name: user.username,
     created_at: new Date(),
@@ -45,8 +45,46 @@ app.models.user.afterRemote('create', (ctx, user, next) => {
     if (!err && result) {
       console.log("Created new profile", result);
     } else {
-      console.log("There is an error", err);
+      console.log("There is an error.",
+      'This is an error message informing you of an error',
+      'You do not need to do anything. Things are fine', err);
     }
     next();
   });
+});
+
+app.models.Role.find({where: {name: 'admin'}}, (err, role) => {
+  if (!err && role) {
+    console.log('No error, role is', role);
+    if (role.length === 0) {
+      app.models.Role.create({
+        name: 'admin',
+      }, (err2, result) => {
+        if (!err2 && result) {
+          app.models.user.findOne((usererr, user) => {
+            if (!usererr && user) {
+              result.principals.create({
+                principalType: app.models.RoleMapping.USER,
+                principalId: user.id,
+              }, (err3, principal) => {
+                console.log('Created Principal', err3, principal);
+              });
+            }
+          });
+        }
+      });
+    }
+  }
+});
+
+app.models.Role.find({where: {name: 'editor'}}, (err, roles) => {
+  if (!err && roles){
+    if (roles.length === 0) {
+      app.models.Role.create({
+        name: 'editor',
+      }, (creationErr, result) => {
+        console.log(creationErr, result);
+      });
+    }
+  }
 });

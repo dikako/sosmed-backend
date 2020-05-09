@@ -1,43 +1,29 @@
 {
-  "name": "Profile",
+  "name": "PostImage",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "first_name": {
-      "type": "string"
-    },
-    "last_name": {
+    "url": {
       "type": "string"
     },
     "created_at": {
       "type": "date"
-    },
-    "birth_date": {
-      "type": "date"
-    },
-    "age": {
-      "type": "number"
-    },
-    "history": {
-      "type": [
-        "object"
-      ]
     }
   },
   "validations": [],
   "relations": {
+    "Post": {
+      "type": "belongsTo",
+      "model": "Post",
+      "foreignKey": "postId"
+    },
     "user": {
       "type": "belongsTo",
       "model": "user",
       "foreignKey": "userId"
-    },
-    "Post": {
-      "type": "hasMany",
-      "model": "Post",
-      "foreignKey": ""
     }
   },
   "acls": [
@@ -56,7 +42,7 @@
     {
       "accessType": "WRITE",
       "principalType": "ROLE",
-      "principalId": "$owner",
+      "principalId": "editor",
       "permission": "ALLOW"
     }
   ],
